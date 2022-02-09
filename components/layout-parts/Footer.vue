@@ -4,12 +4,20 @@
       <div class="row">
         <div class="col-md-6 py-2 py-md-5">
           <b-nav align="center" class="navbar-dark">
-            <b-nav-item to="/"><span class="text-white">Home</span></b-nav-item>
+            <b-nav-item to="/" v-b-hover="handleHoverHome"
+              ><span
+                v-bind:class="[homeHovered ? 'text-white' : 'text-white-50']"
+                >Home</span
+              ></b-nav-item
+            >
             <b-nav-item
               ><span class="text-secondary cursor">|</span></b-nav-item
             >
-            <b-nav-item to="/about"
-              ><span class="text-white">About</span></b-nav-item
+            <b-nav-item to="/about" v-b-hover="handleHoverAbout"
+              ><span
+                v-bind:class="[aboutHovered ? 'text-white' : 'text-white-50']"
+                >About</span
+              ></b-nav-item
             >
           </b-nav>
         </div>
@@ -35,7 +43,17 @@ export default {
   data() {
     return {
       year: new Date(),
+      homeHovered: false,
+      aboutHovered: false,
     }
+  },
+  methods: {
+    handleHoverHome(e) {
+      this.homeHovered = e
+    },
+    handleHoverAbout(e) {
+      this.aboutHovered = e
+    },
   },
 }
 </script>

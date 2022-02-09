@@ -8,7 +8,7 @@
       />
       <span class="font-weight-bolder">STOCK TRACKER</span>
     </b-navbar-brand>
-    <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+    <b-navbar-toggle target="nav-collapse" class="border-0"></b-navbar-toggle>
 
     <b-collapse id="nav-collapse" is-nav>
       <b-navbar-nav class="ml-md-5">
@@ -29,7 +29,7 @@
 export default {}
 </script>
 
-<style>
+<style scoped>
 .logo {
   width: 1.5rem;
 }
