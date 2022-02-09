@@ -1,4 +1,4 @@
-# stock-track-frontend
+# stock-track-frontend (v0.1.0 In Progress)
 
 ## Build Setup
 
