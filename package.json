@@ -12,6 +12,7 @@
     "lintfix": "prettier --write --list-different ."
   },
   "dependencies": {
+    "@nuxtjs/moment": "^1.6.1",
     "bootstrap": "^4.6.1",
     "bootstrap-vue": "^2.21.2",
     "core-js": "^3.19.3",
