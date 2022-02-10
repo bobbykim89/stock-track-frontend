@@ -1,5 +1,5 @@
 <template>
-  <div class="py-5 text-white font-weight-bolder content-area overflow-hidden">
+  <div class="py-5 text-white content-area overflow-hidden">
     <div class="row">
       <div class="col-md-6">
         <!-- Left -->
@@ -16,7 +16,7 @@
         <div
           class="d-flex flex-column my-3 my-md-5 pt-md-5 justify-content-center"
         >
-          <h2 class="mx-auto">About Stock Tracker</h2>
+          <h2 class="display-4 mx-auto">About Stock Tracker</h2>
           <div class="mb-3 mx-auto mx-md-2">
             <p>Stock Price Web App</p>
             <p>Version: 0.1.0(In Development)</p>
@@ -83,5 +83,11 @@ a {
 }
 a:hover {
   color: rgb(241 245 249);
+}
+
+@media (max-width: 767px) {
+  .display-4 {
+    font-size: 2.5rem !important;
+  }
 }
 </style>

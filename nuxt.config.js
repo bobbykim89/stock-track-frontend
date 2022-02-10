@@ -44,4 +44,8 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
+  env: {
+    BASE_URL: process.env.BASE_URL || 'http://localhost:4000',
+    API_KEY: process.env.FINNHUB_API_KEY,
+  },
 }
