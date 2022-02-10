@@ -47,5 +47,6 @@ export default {
   env: {
     BASE_URL: process.env.BASE_URL || 'http://localhost:4000',
     API_KEY: process.env.FINNHUB_API_KEY,
+    ALPHA_API_KEY: process.env.ALPHAVANTAGE_API_KEY,
   },
 }
