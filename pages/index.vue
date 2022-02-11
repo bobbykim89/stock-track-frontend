@@ -39,6 +39,15 @@
         />
       </b-card-group>
     </div>
+    <div v-for="post in posts" :key="post.id" class="bg-white">
+      <p>
+        {{ post.code }}
+      </p>
+      <p>
+        {{ post.name }}
+      </p>
+      <p>{{ post.id }}</p>
+    </div>
   </div>
 </template>
 
@@ -46,6 +55,7 @@
 import axios from 'axios'
 import StockCard from '@/components/main-parts/StockCard.vue'
 import FavoritesCard from '@/components/main-parts/FavoritesCard.vue'
+import { getAllPosts } from '@/graphql/queries/post'
 const ALPHA_API_KEY = process.env.ALPHA_API_KEY
 export default {
   name: 'IndexPage',
@@ -74,25 +84,20 @@ export default {
     }
   },
   async fetch() {
-    // await this.getStockInfo()
     if (this.query !== '') {
       await this.getAlphaInfo()
     }
-    // await this.getLiveInfo(this.stockDetail[0].symbol)
+  },
+  async asyncData({ app }) {
+    const client = app.apolloProvider.defaultClient
+    const res = await client.query({
+      query: getAllPosts,
+    })
+    const { GET_ALL_POSTS } = res.data
+    console.log(GET_ALL_POSTS)
+    return { posts: { ...GET_ALL_POSTS } }
   },
   methods: {
-    async getStockInfo() {
-      // Get stock info from finnhub (not accurate)
-      const stockInfo = await axios.get(
-        `https://finnhub.io/api/v1/search?q=${this.query}&token=${API_KEY}`
-      )
-      const infoResult = stockInfo.data.result
-      const infoCommonStock = await infoResult.filter((info) => {
-        return info.type === 'Common Stock' && !info.symbol.includes('.')
-      })
-      console.log(infoCommonStock)
-      this.stockDetail = infoCommonStock
-    },
     async getAlphaInfo() {
       // Get stock info from Alphabase
       let alphaList = []
@@ -105,12 +110,12 @@ export default {
           name: res['2. name'],
         })
       })
-      console.log(alphaList)
       this.stockDetail = alphaList
     },
     clearSearch() {
       this.query = ''
     },
   },
+  watchQuery: ['posts'],
 }
 </script>
