@@ -23,7 +23,6 @@
 
 <script>
 import axios from 'axios'
-import { deletePost } from '@/graphql/mutations/post'
 const API_KEY = process.env.API_KEY
 export default {
   props: {
@@ -64,14 +63,9 @@ export default {
       this.changePositive = !variable.toString().includes('-')
     },
     async handleRemove() {
-      const res = await this.$apollo.mutate({
-        mutation: deletePost,
-        variables: {
-          id: this.favorite.id,
-        },
+      await this.$store.dispatch('postStore/deletePost', {
+        id: this.favorite.id,
       })
-      const { DELETE_POST } = res.data
-      console.log(DELETE_POST)
     },
   },
 }

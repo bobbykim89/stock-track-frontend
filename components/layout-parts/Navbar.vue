@@ -17,16 +17,21 @@
       </b-navbar-nav>
 
       <!-- Right aligned auth links -->
-      <b-navbar-nav class="ml-md-auto">
-        <b-nav-item to="/login" class="mx-auto mx-md-0">Login</b-nav-item>
-        <b-nav-item to="/signup" class="mx-auto mx-md-0">Signup</b-nav-item>
-      </b-navbar-nav>
+      <NavAuthLink v-if="checkAuth" />
+      <NavGuestLink v-else />
     </b-collapse>
   </b-navbar>
 </template>
 
 <script>
+import NavAuthLink from '@/components/layout-parts/Nav-AuthLink.vue'
+import NavGuestLink from '@/components/layout-parts/Nav-GuestLink.vue'
+
 export default {
+  components: {
+    NavAuthLink,
+    NavGuestLink,
+  },
   computed: {
     checkAuth() {
       return this.$store.getters['authStore/getAuthentication']

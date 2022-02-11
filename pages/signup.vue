@@ -73,9 +73,32 @@ export default {
     }
   },
   methods: {
-    onSubmit() {
-      console.log(this.userInfo)
-      this.userInfo = { username: '', email: '', password: '', password2: '' }
+    async onSubmit() {
+      const { username, email, password, password2 } = this.userInfo
+      if (email === '' || password === '') {
+        console.log('please fill all fields.')
+        return
+      } else if (password !== password2) {
+        console.log("Passwords don't match!")
+        return
+      } else {
+        try {
+          await this.$store.dispatch('authStore/signUp', {
+            username,
+            email,
+            password,
+          })
+          this.userInfo = {
+            username: '',
+            email: '',
+            password: '',
+            password2: '',
+          }
+          await this.$router.push('/')
+        } catch (err) {
+          console.log(err)
+        }
+      }
     },
   },
 }
