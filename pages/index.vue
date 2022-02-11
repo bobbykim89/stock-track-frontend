@@ -1,14 +1,15 @@
 <template>
-  <div class="h-100">
+  <div class="h-100 mb-5">
     <div class="bg-dark rounded shadow p-4 px-md-5 my-4 mx-2">
       <b-input-group>
         <b-input-group-prepend>
-          <b-button>
+          <b-button @click="clickSearch">
             <i class="fa-solid fa-magnifying-glass"></i>
           </b-button>
         </b-input-group-prepend>
         <b-form-input
           type="text"
+          id="search"
           v-model.lazy="query"
           @keyup.enter="$fetch"
           placeholder="Press enter afterwards."
@@ -26,27 +27,19 @@
           :key="stock.symbol"
           class="col-md-3"
           :stockInfo="stock"
+          @clearSearch="clearSearch"
         />
       </b-card-group>
     </div>
     <div v-if="query === ''">
       <b-card-group>
         <FavoritesCard
-          v-for="favorite in favorites"
-          :key="favorite.symbol"
+          v-for="favorite in posts"
+          :key="favorite.id"
           :favorite="favorite"
           class="col-md-3"
         />
       </b-card-group>
-    </div>
-    <div v-for="post in posts" :key="post.id" class="bg-white">
-      <p>
-        {{ post.code }}
-      </p>
-      <p>
-        {{ post.name }}
-      </p>
-      <p>{{ post.id }}</p>
     </div>
   </div>
 </template>
@@ -67,20 +60,6 @@ export default {
     return {
       stockDetail: [],
       query: '',
-      favorites: [
-        {
-          name: 'Advanced Micro Devices',
-          symbol: 'AMD',
-        },
-        {
-          name: 'Intel Corp',
-          symbol: 'INTC',
-        },
-        {
-          name: 'Tesla Inc',
-          symbol: 'TSLA',
-        },
-      ],
     }
   },
   async fetch() {
@@ -114,6 +93,9 @@ export default {
     },
     clearSearch() {
       this.query = ''
+    },
+    clickSearch() {
+      document.getElementById('search').focus()
     },
   },
   watchQuery: ['posts'],

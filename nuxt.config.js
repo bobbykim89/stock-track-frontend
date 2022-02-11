@@ -1,3 +1,6 @@
+import Cookies from 'js-cookie'
+const token = Cookies.get('apollo-token')
+
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
@@ -45,7 +48,15 @@ export default {
   apollo: {
     clientConfigs: {
       default: {
-        httpEndpoint: 'http://localhost:4000/graphql',
+        httpEndpoint: process.env.BASE_URL || 'http://localhost:4000/graphql',
+        httpLinkOptions: {
+          headers: {
+            Authorization: token ? `Bearer ${token}` : '',
+          },
+        },
+        watchLoading: '~/plugins/apollo-watch-loading-handler.js',
+        errorHandler: '~/plugins/apollo-error-handler.js',
+        tokenName: 'apollo-token',
       },
     },
   },

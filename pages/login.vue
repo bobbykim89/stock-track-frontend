@@ -34,6 +34,7 @@
 </template>
 
 <script>
+import { login } from '@/graphql/mutations/user'
 export default {
   data() {
     return {
@@ -44,8 +45,24 @@ export default {
     }
   },
   methods: {
-    onSubmit() {
-      console.log(this.userInfo)
+    async onSubmit() {
+      const { email, password } = this.userInfo
+      try {
+        const res = await this.$apollo.mutate({
+          mutation: login,
+          variables: {
+            email,
+            password,
+          },
+        })
+        const { LOGIN_USER } = res.data
+        console.log(LOGIN_USER)
+        const token = LOGIN_USER.token
+        console.log(token)
+        await this.$apolloHelpers.onLogin(token)
+      } catch (err) {
+        console.log(err)
+      }
       this.userInfo = { email: '', password: '' }
     },
   },
