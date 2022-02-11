@@ -92,6 +92,7 @@ export default {
       this.stockDetail = alphaList
     },
     clearSearch() {
+      this.$nuxt.refresh()
       this.query = ''
     },
     clickSearch() {
