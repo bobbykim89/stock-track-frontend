@@ -34,7 +34,6 @@ export const actions = {
       const { LOGIN_USER } = res.data
       console.log(LOGIN_USER)
       const token = LOGIN_USER.token
-      console.log(token)
       await this.$apolloHelpers.onLogin(token)
       context.commit('setUser', {
         username: LOGIN_USER.username,
@@ -69,7 +68,7 @@ export const actions = {
       })
       context.commit('setAuthentication', true)
     } catch (err) {
-      onsole.log(err)
+      console.log(err)
       context.commit('setUser', null)
       context.commit('setAuthentication', false)
     }

@@ -65,13 +65,19 @@ export default {
       // }
       if (email === '' || password === '') {
         console.log('please fill all fields')
+        return
       } else {
-        this.$store.dispatch('authStore/login', {
-          email: email,
-          password: password,
-        })
+        try {
+          await this.$store.dispatch('authStore/login', {
+            email: email,
+            password: password,
+          })
+          this.userInfo = { email: '', password: '' }
+          await this.$router.push('/')
+        } catch (err) {
+          console.log(err)
+        }
       }
-      this.userInfo = { email: '', password: '' }
     },
   },
 }

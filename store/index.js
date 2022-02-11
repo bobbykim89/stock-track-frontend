@@ -14,7 +14,6 @@ export const actions = {
       return decodedToken.user
     }
     const user = getUser()
-
     if (user) {
       await dispatch('authStore/setUser', {
         username: user.username,
@@ -22,5 +21,6 @@ export const actions = {
         id: user.id,
       })
     }
+    await dispatch('postStore/getPosts')
   },
 }

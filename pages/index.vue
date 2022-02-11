@@ -25,7 +25,7 @@
         <StockCard
           v-for="stock in stockDetail"
           :key="stock.symbol"
-          class="col-md-3"
+          class="col-md-4 col-lg-3"
           :stockInfo="stock"
           @clearSearch="clearSearch"
         />
@@ -34,10 +34,10 @@
     <div v-if="query === ''">
       <b-card-group>
         <FavoritesCard
-          v-for="favorite in posts"
+          v-for="favorite in getPosts"
           :key="favorite.id"
           :favorite="favorite"
-          class="col-md-3"
+          class="col-md-4 col-lg-3"
         />
       </b-card-group>
     </div>
@@ -48,7 +48,6 @@
 import axios from 'axios'
 import StockCard from '@/components/main-parts/StockCard.vue'
 import FavoritesCard from '@/components/main-parts/FavoritesCard.vue'
-import { getAllPosts } from '@/graphql/queries/post'
 const ALPHA_API_KEY = process.env.ALPHA_API_KEY
 export default {
   name: 'IndexPage',
@@ -62,20 +61,20 @@ export default {
       query: '',
     }
   },
+  middleware: 'checkAuth',
   async fetch() {
     if (this.query !== '') {
       await this.getAlphaInfo()
     }
   },
-  async asyncData({ app }) {
-    const client = app.apolloProvider.defaultClient
-    const res = await client.query({
-      query: getAllPosts,
-    })
-    const { GET_ALL_POSTS } = res.data
-    console.log(GET_ALL_POSTS)
-    return { posts: { ...GET_ALL_POSTS } }
-  },
+  // async asyncData({ app }) {
+  //   const client = app.apolloProvider.defaultClient
+  //   const res = await client.query({
+  //     query: getAllPosts,
+  //   })
+  //   const { GET_ALL_POSTS } = res.data
+  //   return { posts: { ...GET_ALL_POSTS } }
+  // },
   methods: {
     async getAlphaInfo() {
       // Get stock info from Alphabase
@@ -99,6 +98,11 @@ export default {
       document.getElementById('search').focus()
     },
   },
-  watchQuery: ['posts'],
+  computed: {
+    getPosts() {
+      const posts = this.$store.getters['postStore/getPosts']
+      return posts
+    },
+  },
 }
 </script>

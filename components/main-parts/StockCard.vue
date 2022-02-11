@@ -16,7 +16,6 @@
 </template>
 
 <script>
-import { createPost } from '@/graphql/mutations/post'
 export default {
   props: {
     stockInfo: {
@@ -27,15 +26,10 @@ export default {
   methods: {
     async handleClick() {
       const { name, symbol } = this.stockInfo
-      const res = await this.$apollo.mutate({
-        mutation: createPost,
-        variables: {
-          name,
-          code: symbol,
-        },
+      await this.$store.dispatch('postStore/createNewPost', {
+        name,
+        code: symbol,
       })
-      const { CREATE_POST } = res.data
-      console.log(CREATE_POST)
       this.$emit('clearSearch')
     },
   },
