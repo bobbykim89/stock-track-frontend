@@ -1,7 +1,7 @@
 <template>
   <div class="mb-3 px-2">
     <b-card
-      :header="favorite.symbol"
+      :header="favorite.code"
       :title="favorite.name"
       bg-variant="dark"
       text-variant="white"
@@ -23,6 +23,7 @@
 
 <script>
 import axios from 'axios'
+import { deletePost } from '@/graphql/mutations/post'
 const API_KEY = process.env.API_KEY
 export default {
   props: {
@@ -44,7 +45,7 @@ export default {
   },
   async fetch() {
     if (this.favorite) {
-      await this.getLiveInfo(this.favorite.symbol)
+      await this.getLiveInfo(this.favorite.code)
     }
     if (this.liveInfo.change !== '') {
       await this.handleStockColor(this.liveInfo.change)
@@ -62,8 +63,15 @@ export default {
     handleStockColor(variable) {
       this.changePositive = !variable.toString().includes('-')
     },
-    handleRemove() {
-      console.log('Removed!')
+    async handleRemove() {
+      const res = await this.$apollo.mutate({
+        mutation: deletePost,
+        variables: {
+          id: this.favorite.id,
+        },
+      })
+      const { DELETE_POST } = res.data
+      console.log(DELETE_POST)
     },
   },
 }
