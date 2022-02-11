@@ -26,7 +26,13 @@
 </template>
 
 <script>
-export default {}
+export default {
+  computed: {
+    checkAuth() {
+      return this.$store.getters['authStore/getAuthentication']
+    },
+  },
+}
 </script>
 
 <style scoped>

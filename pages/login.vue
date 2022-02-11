@@ -47,21 +47,29 @@ export default {
   methods: {
     async onSubmit() {
       const { email, password } = this.userInfo
-      try {
-        const res = await this.$apollo.mutate({
-          mutation: login,
-          variables: {
-            email,
-            password,
-          },
+      // try {
+      //   const res = await this.$apollo.mutate({
+      //     mutation: login,
+      //     variables: {
+      //       email,
+      //       password,
+      //     },
+      //   })
+      //   const { LOGIN_USER } = res.data
+      //   console.log(LOGIN_USER)
+      //   const token = LOGIN_USER.token
+      //   console.log(token)
+      //   await this.$apolloHelpers.onLogin(token)
+      // } catch (err) {
+      //   console.log(err)
+      // }
+      if (email === '' || password === '') {
+        console.log('please fill all fields')
+      } else {
+        this.$store.dispatch('authStore/login', {
+          email: email,
+          password: password,
         })
-        const { LOGIN_USER } = res.data
-        console.log(LOGIN_USER)
-        const token = LOGIN_USER.token
-        console.log(token)
-        await this.$apolloHelpers.onLogin(token)
-      } catch (err) {
-        console.log(err)
       }
       this.userInfo = { email: '', password: '' }
     },

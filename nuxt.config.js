@@ -56,7 +56,7 @@ export default {
         },
         watchLoading: '~/plugins/apollo-watch-loading-handler.js',
         errorHandler: '~/plugins/apollo-error-handler.js',
-        tokenName: 'apollo-token',
+        tokenName: 'accesstoken',
       },
     },
   },
