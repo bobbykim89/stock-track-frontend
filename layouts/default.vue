@@ -2,6 +2,7 @@
   <div class="background">
     <Navbar />
     <div class="container-md content-area px-0">
+      <AlertBar />
       <Nuxt />
     </div>
     <Footer />
@@ -11,10 +12,12 @@
 <script>
 import Navbar from '@/components/layout-parts/Navbar.vue'
 import Footer from '@/components/layout-parts/Footer.vue'
+import AlertBar from '@/components/layout-parts/AlertBar.vue'
 export default {
   components: {
     Navbar,
     Footer,
+    AlertBar,
   },
 }
 </script>

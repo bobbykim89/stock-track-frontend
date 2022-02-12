@@ -1,4 +1,4 @@
-import { getAllPosts } from '@/graphql/queries/post'
+import { getUserPosts } from '@/graphql/queries/post'
 import { createPost, deletePost } from '@/graphql/mutations/post'
 
 export const state = () => ({
@@ -27,11 +27,11 @@ export const actions = {
     try {
       const client = this.app.apolloProvider.defaultClient
       const res = await client.query({
-        query: getAllPosts,
+        query: getUserPosts,
       })
-      const { GET_ALL_POSTS } = res.data
+      const { GET_USER_POSTS } = res.data
 
-      context.commit('setPosts', GET_ALL_POSTS)
+      context.commit('setPosts', GET_USER_POSTS)
     } catch (err) {
       console.log(err)
       context.commit('setError', err)
@@ -48,9 +48,24 @@ export const actions = {
         },
       })
       const { CREATE_POST } = res.data
+      await context.dispatch(
+        'alertStore/setAlert',
+        {
+          msg: `Added ${CREATE_POST.name} to your favorites list!`,
+          type: 'success',
+        },
+        { root: true }
+      )
       context.commit('addPost', CREATE_POST)
     } catch (err) {
-      console.log(err)
+      await context.dispatch(
+        'alertStore/setAlert',
+        {
+          msg: `${err}`,
+          type: 'danger',
+        },
+        { root: true }
+      )
       context.commit('setError', err)
     }
   },
@@ -64,19 +79,26 @@ export const actions = {
         },
       })
       const { DELETE_POST } = res.data
-      context.commit('removePost', DELETE_POST)
+      await context.dispatch(
+        'alertStore/setAlert',
+        {
+          msg: `Removed ${DELETE_POST.name} from your favorites list!`,
+          type: 'success',
+        },
+        { root: true }
+      )
+      context.commit('removePost', id)
     } catch (err) {
-      console.log(err)
+      await context.dispatch(
+        'alertStore/setAlert',
+        {
+          msg: `${err}`,
+          type: 'danger',
+        },
+        { root: true }
+      )
       context.commit('setError', err)
     }
-    const client = this.app.apolloProvider.defaultClient
-    const res = await client.mutate({
-      mutation: deletePost,
-      variables: {
-        id,
-      },
-    })
-    context.commit('removePost', id)
   },
 }
 export const getters = {

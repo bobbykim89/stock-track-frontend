@@ -21,6 +21,5 @@ export const actions = {
         id: user.id,
       })
     }
-    await dispatch('postStore/getPosts')
   },
 }
