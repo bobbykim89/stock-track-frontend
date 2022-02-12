@@ -13,7 +13,6 @@ export const mutations = {
     state.posts = [...state.posts, payload]
   },
   removePost(state, payload) {
-    console.log(payload)
     state.posts = state.posts.filter((post) => {
       return post.id !== payload
     })

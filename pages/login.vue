@@ -27,6 +27,7 @@
           >
           </b-form-input>
         </b-form-group>
+
         <b-button type="submit" class="w-100 mt-2">Submit</b-button>
       </b-form>
     </div>
@@ -34,7 +35,6 @@
 </template>
 
 <script>
-import { login } from '@/graphql/mutations/user'
 export default {
   data() {
     return {
@@ -47,22 +47,6 @@ export default {
   methods: {
     async onSubmit() {
       const { email, password } = this.userInfo
-      // try {
-      //   const res = await this.$apollo.mutate({
-      //     mutation: login,
-      //     variables: {
-      //       email,
-      //       password,
-      //     },
-      //   })
-      //   const { LOGIN_USER } = res.data
-      //   console.log(LOGIN_USER)
-      //   const token = LOGIN_USER.token
-      //   console.log(token)
-      //   await this.$apolloHelpers.onLogin(token)
-      // } catch (err) {
-      //   console.log(err)
-      // }
       if (email === '' || password === '') {
         console.log('please fill all fields')
         return
@@ -76,10 +60,6 @@ export default {
           this.userInfo = { email: '', password: '' }
           await this.$router.push('/')
         } catch (err) {
-          // await this.$store.dispatch('alertStore/setAlert', {
-          //   msg: `Login Failed.. Please try again!`,
-          //   type: 'danger',
-          // })
           console.log(err)
         }
       }

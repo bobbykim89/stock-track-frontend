@@ -13,6 +13,7 @@
     <b-collapse id="nav-collapse" is-nav>
       <b-navbar-nav class="ml-md-5">
         <b-nav-item to="/" class="mx-auto mx-md-0"> Home </b-nav-item>
+        <b-nav-item to="/todo" class="mx-auto mx-md-0"> Todo </b-nav-item>
         <b-nav-item to="/about" class="mx-auto mx-md-0"> About </b-nav-item>
       </b-navbar-nav>
 

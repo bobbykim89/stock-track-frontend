@@ -13,6 +13,15 @@
             <b-nav-item
               ><span class="text-secondary cursor">|</span></b-nav-item
             >
+            <b-nav-item to="/todo" v-b-hover="handleHoverTodo"
+              ><span
+                v-bind:class="[todoHovered ? 'text-white' : 'text-white-50']"
+                >Todo</span
+              ></b-nav-item
+            >
+            <b-nav-item
+              ><span class="text-secondary cursor">|</span></b-nav-item
+            >
             <b-nav-item to="/about" v-b-hover="handleHoverAbout"
               ><span
                 v-bind:class="[aboutHovered ? 'text-white' : 'text-white-50']"
@@ -44,12 +53,16 @@ export default {
     return {
       year: new Date(),
       homeHovered: false,
+      todoHovered: false,
       aboutHovered: false,
     }
   },
   methods: {
     handleHoverHome(e) {
       this.homeHovered = e
+    },
+    handleHoverTodo(e) {
+      this.todoHovered = e
     },
     handleHoverAbout(e) {
       this.aboutHovered = e
