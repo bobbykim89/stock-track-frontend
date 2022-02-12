@@ -9,7 +9,6 @@ const getAllPosts = gql`
       author {
         id
         username
-        email
       }
       date
     }
@@ -25,7 +24,6 @@ const getUserPosts = gql`
       author {
         id
         username
-        email
       }
       date
     }

@@ -72,9 +72,14 @@ export default {
             email: email,
             password: password,
           })
+
           this.userInfo = { email: '', password: '' }
           await this.$router.push('/')
         } catch (err) {
+          // await this.$store.dispatch('alertStore/setAlert', {
+          //   msg: `Login Failed.. Please try again!`,
+          //   type: 'danger',
+          // })
           console.log(err)
         }
       }

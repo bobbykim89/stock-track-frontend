@@ -67,14 +67,6 @@ export default {
       await this.getAlphaInfo()
     }
   },
-  // async asyncData({ app }) {
-  //   const client = app.apolloProvider.defaultClient
-  //   const res = await client.query({
-  //     query: getAllPosts,
-  //   })
-  //   const { GET_ALL_POSTS } = res.data
-  //   return { posts: { ...GET_ALL_POSTS } }
-  // },
   methods: {
     async getAlphaInfo() {
       // Get stock info from Alphabase
@@ -90,6 +82,9 @@ export default {
       })
       this.stockDetail = alphaList
     },
+    onPageLoad() {
+      this.$store.dispatch('postStore/getPosts')
+    },
     clearSearch() {
       this.$nuxt.refresh()
       this.query = ''
@@ -103,6 +98,9 @@ export default {
       const posts = this.$store.getters['postStore/getPosts']
       return posts
     },
+  },
+  mounted() {
+    this.onPageLoad()
   },
 }
 </script>

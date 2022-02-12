@@ -10,9 +10,9 @@ export const mutations = {
   },
 }
 export const actions = {
-  setAlert(context, { msg, timeout = 5000 }) {
-    context.commit('setAlert', msg)
-    setTimeout(() => commit('dismissAlert'), timeout)
+  setAlert(context, { msg, type, timeout = 3000 }) {
+    context.commit('setAlert', { msg, type })
+    setTimeout(() => context.commit('dismissAlert'), timeout)
   },
 }
 export const getters = {
