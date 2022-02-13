@@ -38,6 +38,20 @@ export const actions = {
   },
   async createNewPost(context, { name, code }) {
     try {
+      const checkUnique = context.state.posts.filter((post) => {
+        return post.code === code
+      })
+      if (checkUnique.length) {
+        await context.dispatch(
+          'alertStore/setAlert',
+          {
+            msg: `${name} already in your list`,
+            type: 'danger',
+          },
+          { root: true }
+        )
+        return
+      }
       const client = this.app.apolloProvider.defaultClient
       const res = await client.mutate({
         mutation: createPost,

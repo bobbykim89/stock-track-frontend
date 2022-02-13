@@ -14,7 +14,7 @@ export const mutations = {
     state.todos = payload
   },
   addTodo(state, payload) {
-    state.todos = [...state.todos, payload]
+    state.todos = [payload, ...state.todos]
   },
   editTodo(state, payload) {
     state.todos = state.todos.map((todo) =>
