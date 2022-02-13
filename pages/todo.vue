@@ -27,7 +27,14 @@ export default {
   computed: {
     getTodos() {
       const todos = this.$store.getters['todoStore/getTodos']
-      return todos
+      const completed = todos.filter((todo) => {
+        return todo.complete === true
+      })
+      const incomplete = todos.filter((todo) => {
+        return todo.complete === false
+      })
+
+      return [...incomplete, ...completed]
     },
   },
   mounted() {

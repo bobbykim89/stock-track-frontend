@@ -7,7 +7,11 @@
     :style="{ backgroundColor: bgHandler }"
   >
     <div class="card-header d-flex justify-content-between">
-      <h4 class="my-0 text-capitalize" v-b-toggle="todo.id" @click="toggleTodo">
+      <h4
+        class="my-0 pr-5 text-capitalize"
+        v-b-toggle="todo.id"
+        @click="toggleTodo"
+      >
         {{ todo.title }}
         <span class="h5"
           ><i
@@ -35,7 +39,7 @@
         </div>
         <div class="col-2 d-flex flex-column">
           <div class="ml-auto mb-2 mr-1">
-            <i class="fa-solid fa-pen icon-hover"></i>
+            <i @click="toggleModal" class="fa-solid fa-pen icon-hover"></i>
           </div>
           <div class="ml-auto mr-1">
             <i @click="deleteTodo" class="fa-solid fa-trash icon-hover"></i>
@@ -43,6 +47,46 @@
         </div>
       </div>
     </b-collapse>
+    <div v-if="todoEdit">
+      <b-modal
+        v-model="showModal"
+        header-bg-variant="dark"
+        header-text-variant="light"
+      >
+        <b-form @submit.prevent="editTodo" class="mx-auto mt-3 mb-3">
+          <b-form-group id="title-group" label="Title:" label-for="title">
+            <b-form-input
+              id="title"
+              type="text"
+              v-model="todoEdit.title"
+              required
+            >
+            </b-form-input>
+          </b-form-group>
+          <b-form-group id="content-group" label="Content:" label-for="content">
+            <b-form-textarea id="content" v-model="todoEdit.content" rows="6">
+            </b-form-textarea>
+          </b-form-group>
+          <b-form-group class="d-flex justify-content-center">
+            <b-form-radio-group v-model="todoEdit.type">
+              <b-form-radio value="personal"
+                ><span class="text-dark">Personal</span></b-form-radio
+              >
+              <b-form-radio value="work"
+                ><span class="text-success">Work</span></b-form-radio
+              >
+              <b-form-radio value="errand"
+                ><span class="text-info">Errand</span></b-form-radio
+              >
+            </b-form-radio-group>
+          </b-form-group>
+          <b-button type="submit" class="w-100">Submit</b-button>
+        </b-form>
+        <template #modal-footer>
+          <b-button>Close</b-button>
+        </template>
+      </b-modal>
+    </div>
   </div>
 </template>
 
@@ -53,11 +97,35 @@ export default {
       type: Object,
       required: true,
     },
-    toggled: false,
+  },
+  data() {
+    return {
+      toggled: false,
+      showModal: false,
+      todoEdit: null,
+    }
+  },
+  async fetch() {
+    await this.getTodoEdit()
+    console.log(this.todoEdit)
   },
   methods: {
     toggleTodo() {
       this.toggled = !this.toggled
+    },
+    toggleModal() {
+      this.showModal = !this.showModal
+      this.$nuxt.refresh()
+    },
+    async getTodoEdit() {
+      const todos = await this.$store.getters['todoStore/getTodos']
+      const currentTodoList = todos.filter((todo) => {
+        return todo.id === this.todo.id
+      })
+      const currentTodo = currentTodoList[0]
+      if (currentTodo) {
+        this.todoEdit = { ...currentTodo }
+      }
     },
     async toggleComplete() {
       const complete = !this.todo.complete
@@ -71,6 +139,9 @@ export default {
       await this.$store.dispatch('todoStore/deleteTodo', {
         id: this.todo.id,
       })
+    },
+    async editTodo() {
+      console.log(this.todoEdit)
     },
   },
   computed: {

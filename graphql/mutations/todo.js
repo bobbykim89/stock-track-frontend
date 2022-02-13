@@ -21,16 +21,9 @@ const editTodo = gql`
     $id: ID!
     $title: String!
     $content: String
-    $complete: Boolean!
     $type: String!
   ) {
-    EDIT_TODO(
-      id: $id
-      title: $title
-      content: $content
-      complete: $complete
-      type: $type
-    ) {
+    EDIT_TODO(id: $id, title: $title, content: $content, type: $type) {
       id
       title
       content

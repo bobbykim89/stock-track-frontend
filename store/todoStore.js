@@ -73,7 +73,7 @@ export const actions = {
       )
     }
   },
-  async editTodo(context, { id, title, content, complete, type }) {
+  async editTodo(context, { id, title, content, type }) {
     try {
       const client = this.app.apolloProvider.defaultClient
       const res = await client.mutate({
@@ -82,7 +82,6 @@ export const actions = {
           id,
           title,
           content,
-          complete,
           type,
         },
       })
@@ -122,7 +121,7 @@ export const actions = {
       await context.dispatch(
         'alertStore/setAlert',
         {
-          msg: `Added ${TOGGLE_COMPLETE.title} to your Todo list!`,
+          msg: `${TOGGLE_COMPLETE.title} has been updated!`,
           type: 'success',
         },
         { root: true }
