@@ -52,8 +52,14 @@
         v-model="showModal"
         header-bg-variant="dark"
         header-text-variant="light"
+        footer-bg-variant="dark"
+        footer-text-variant="light"
       >
-        <b-form @submit.prevent="editTodo" class="mx-auto mt-3 mb-3">
+        <b-form
+          @submit.prevent="editTodo"
+          :id="todo.id + 'form'"
+          class="mx-auto mt-3 mb-3"
+        >
           <b-form-group id="title-group" label="Title:" label-for="title">
             <b-form-input
               id="title"
@@ -80,10 +86,20 @@
               >
             </b-form-radio-group>
           </b-form-group>
-          <b-button type="submit" class="w-100">Submit</b-button>
+          <!-- <b-button type="submit" class="w-100">Submit</b-button> -->
         </b-form>
         <template #modal-footer>
-          <b-button>Close</b-button>
+          <button
+            type="submit"
+            :form="todo.id + 'form'"
+            class="submit-button h5 mr-3 text-light"
+          >
+            <i class="fa-solid fa-check"></i>
+          </button>
+
+          <span class="h5 mr-3">
+            <i @click="showModal = false" class="fa-solid fa-xmark"></i>
+          </span>
         </template>
       </b-modal>
     </div>
@@ -107,7 +123,6 @@ export default {
   },
   async fetch() {
     await this.getTodoEdit()
-    console.log(this.todoEdit)
   },
   methods: {
     toggleTodo() {
@@ -135,13 +150,25 @@ export default {
       })
     },
     async deleteTodo() {
-      console.log(this.todo)
-      await this.$store.dispatch('todoStore/deleteTodo', {
-        id: this.todo.id,
-      })
+      if (
+        confirm(
+          `Are you sure you want to remove ${this.todo.title} from your todo list?`
+        )
+      ) {
+        await this.$store.dispatch('todoStore/deleteTodo', {
+          id: this.todo.id,
+        })
+      }
     },
     async editTodo() {
-      console.log(this.todoEdit)
+      const { title, content, type } = this.todoEdit
+      await this.$store.dispatch('todoStore/editTodo', {
+        id: this.todo.id,
+        title,
+        content,
+        type,
+      })
+      this.showModal = false
     },
   },
   computed: {
@@ -184,5 +211,12 @@ export default {
 }
 .icon-hover:hover {
   color: #adb5bd;
+}
+.submit-button {
+  background-color: transparent;
+  background-repeat: none;
+  overflow: hidden;
+  border: none;
+  outline: none;
 }
 </style>

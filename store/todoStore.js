@@ -174,4 +174,7 @@ export const getters = {
   getTodos(state) {
     return state.todos
   },
+  getFiltered(state) {
+    return state.filtered
+  },
 }
