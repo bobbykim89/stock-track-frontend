@@ -24,8 +24,12 @@ export default {
 </script>
 
 <style scoped>
-.username a:hover {
+.username a:hover,
+.username a:focus {
   cursor: default !important;
-  color: #9a9d9f !important;
+  /* color: #9a9da0 !important; */
+  text-decoration: none !important;
+  color: #999999 !important;
+  background-color: transparent !important;
 }
 </style>
