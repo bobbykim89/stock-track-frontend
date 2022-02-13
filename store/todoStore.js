@@ -38,7 +38,14 @@ export const actions = {
 
       context.commit('setTodos', GET_USER_TODOS)
     } catch (err) {
-      console.log(err)
+      await context.dispatch(
+        'alertStore/setAlert',
+        {
+          msg: `${err}`,
+          type: 'danger',
+        },
+        { root: true }
+      )
     }
   },
   async createNewTodo(context, { title, content, type }) {
@@ -173,8 +180,5 @@ export const actions = {
 export const getters = {
   getTodos(state) {
     return state.todos
-  },
-  getFiltered(state) {
-    return state.filtered
   },
 }
