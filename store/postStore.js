@@ -3,7 +3,6 @@ import { createPost, deletePost } from '@/graphql/mutations/post'
 
 export const state = () => ({
   posts: [],
-  postError: null,
 })
 export const mutations = {
   setPosts(state, payload) {
@@ -17,9 +16,6 @@ export const mutations = {
       return post.id !== payload
     })
   },
-  setError(state, payload) {
-    state.postError = payload
-  },
 }
 export const actions = {
   async getPosts(context) {
@@ -32,8 +28,14 @@ export const actions = {
 
       context.commit('setPosts', GET_USER_POSTS)
     } catch (err) {
-      console.log(err)
-      context.commit('setError', err)
+      await context.dispatch(
+        'alertStore/setAlert',
+        {
+          msg: `${err}`,
+          type: 'danger',
+        },
+        { root: true }
+      )
     }
   },
   async createNewPost(context, { name, code }) {
@@ -79,7 +81,6 @@ export const actions = {
         },
         { root: true }
       )
-      context.commit('setError', err)
     }
   },
   async deletePost(context, { id }) {
@@ -110,15 +111,11 @@ export const actions = {
         },
         { root: true }
       )
-      context.commit('setError', err)
     }
   },
 }
 export const getters = {
   getPosts(state) {
     return state.posts
-  },
-  getPostError(state) {
-    return state.postError
   },
 }
