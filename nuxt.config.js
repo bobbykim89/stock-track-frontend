@@ -4,14 +4,24 @@ const token = Cookies.get('apollo-token')
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'stock-track-frontend',
+    title: 'Stock Tracker',
     htmlAttrs: {
       lang: 'en',
     },
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: '' },
+      {
+        hid: 'description',
+        name: 'description',
+        content:
+          'Small web app to track stock price and keep your things to do',
+      },
+      {
+        hid: 'keywords',
+        name: 'keywords',
+        content: 'stock market, finnhub, alpha vantage, todo',
+      },
       { name: 'format-detection', content: 'telephone=no' },
     ],
     link: [

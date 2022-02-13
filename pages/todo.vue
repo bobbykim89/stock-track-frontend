@@ -22,11 +22,17 @@ export default {
     TodoItem,
     TodoFilter,
   },
+  head() {
+    return {
+      title: 'Todos - Stock Tracker',
+    }
+  },
   data() {
     return {
       query: '',
     }
   },
+  middleware: 'checkAuth',
   methods: {
     onPageLoad() {
       this.$store.dispatch('todoStore/getTodos')
