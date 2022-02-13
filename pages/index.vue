@@ -50,7 +50,7 @@ import StockCard from '@/components/main-parts/StockCard.vue'
 import FavoritesCard from '@/components/main-parts/FavoritesCard.vue'
 const ALPHA_API_KEY = process.env.ALPHA_API_KEY
 export default {
-  name: 'IndexPage',
+  name: 'Home',
   components: {
     StockCard,
     FavoritesCard,

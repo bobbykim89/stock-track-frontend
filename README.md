@@ -1,6 +1,8 @@
 # stock-track-frontend (v0.1.0 In Progress)
 
-## Build Setup
+Frontend part of small stock price tracker webapp using NuxtJS, apollo graphql, and bootstrap vue. Backend script information can be found in this [Repository](https://github.com/bobbykim89/stock-track-backend)
+
+## Scripts
 
 ```bash
 # install dependencies
@@ -17,52 +19,30 @@ $ yarn start
 $ yarn generate
 ```
 
-For detailed explanation on how things work, check out the [documentation](https://nuxtjs.org).
+## Dependencies
 
-## Special Directories
+@nuxtjs/apollo\
+@nuxtjs/moment\
+axios\
+bootstrap-vue\
+graphql-tag\
+js-cookie\
+jwt-decode
 
-You can create the following extra directories, some of which have special behaviors. Only `pages` is required; you can delete them if you don't want to use their functionality.
+## Changes
 
-### `assets`
+1. Searches stock symbols from alpha vantage API and fetches stock price info from finnhub API, due to search accuracy issue in finnhub API.
+2. Vuex store prevents having favorite stocks list from having duplication. It will send error alert and stop the currnet process.
+3. Add todo list tab and the data will be handled in separate vuex store.
+4. Data from backend will have GraphQL form, and they will be stored/handled in Vuex store.
+5. Private routes added, and user needs to login to access / and /todo route.
+6. Todo List orders, colors changes dynamically based on status of completion and task type.
+7. Search bar added on todo section to filter certain todo.
 
-The assets directory contains your uncompiled assets such as Stylus or Sass files, images, or fonts.
+## Known Issues
 
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/assets).
+N/A
 
-### `components`
+## Update Log
 
-The components directory contains your Vue.js components. Components make up the different parts of your page and can be reused and imported into your pages, layouts and even other components.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/components).
-
-### `layouts`
-
-Layouts are a great help when you want to change the look and feel of your Nuxt app, whether you want to include a sidebar or have distinct layouts for mobile and desktop.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/layouts).
-
-### `pages`
-
-This directory contains your application views and routes. Nuxt will read all the `*.vue` files inside this directory and setup Vue Router automatically.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/get-started/routing).
-
-### `plugins`
-
-The plugins directory contains JavaScript plugins that you want to run before instantiating the root Vue.js Application. This is the place to add Vue plugins and to inject functions or constants. Every time you need to use `Vue.use()`, you should create a file in `plugins/` and add its path to plugins in `nuxt.config.js`.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/plugins).
-
-### `static`
-
-This directory contains your static files. Each file inside this directory is mapped to `/`.
-
-Example: `/static/robots.txt` is mapped as `/robots.txt`.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/static).
-
-### `store`
-
-This directory contains your Vuex store files. Creating a file in this directory automatically activates Vuex.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/store).
+N/A

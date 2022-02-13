@@ -36,6 +36,11 @@
 
 <script>
 export default {
+  head() {
+    return {
+      title: 'Login - Stock Tracker',
+    }
+  },
   data() {
     return {
       userInfo: {

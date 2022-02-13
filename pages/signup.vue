@@ -62,6 +62,11 @@
 
 <script>
 export default {
+  head() {
+    return {
+      title: 'Sign Up - Stock Tracker',
+    }
+  },
   data() {
     return {
       userInfo: {

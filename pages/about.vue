@@ -58,7 +58,13 @@
 </template>
 
 <script>
-export default {}
+export default {
+  head() {
+    return {
+      title: 'About - Stock Tracker',
+    }
+  },
+}
 </script>
 
 <style scoped>
