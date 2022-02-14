@@ -83,6 +83,12 @@ export default {
       if (email === '' || password === '') {
         console.log('please fill all fields.')
         return
+      } else if (!this.validatePassword(password)) {
+        await this.$store.dispatch('alertStore/setAlert', {
+          msg: 'Password must contain at least one number, one uppercase and lowercase letter, and at least 8 or more characters',
+          type: 'danger',
+        })
+        return
       } else if (password !== password2) {
         console.log("Passwords don't match!")
         return
@@ -104,6 +110,10 @@ export default {
           console.log(err)
         }
       }
+    },
+    validatePassword(password) {
+      const validate = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/
+      return validate.test(password)
     },
   },
 }
