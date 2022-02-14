@@ -64,10 +64,7 @@ export default {
           headers: {
             Authorization: token ? `Bearer ${token}` : '',
           },
-          fetchOptions: {
-            mode: 'cors',
-          },
-          credentials: 'omit',
+          mode: 'cors',
         },
         watchLoading: '~/plugins/apollo-watch-loading-handler.js',
         errorHandler: '~/plugins/apollo-error-handler.js',
