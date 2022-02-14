@@ -59,7 +59,7 @@ export default {
   apollo: {
     clientConfigs: {
       default: {
-        httpEndpoint: [process.env.BASE_URL, 'http://localhost:4000/graphql'],
+        httpEndpoint: process.env.BASE_URL || 'http://localhost:4000/graphql',
         httpLinkOptions: {
           headers: {
             Authorization: token ? `Bearer ${token}` : '',
