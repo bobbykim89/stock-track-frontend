@@ -17,8 +17,6 @@
     "@nuxtjs/proxy": "^2.1.0",
     "@nuxtjs/vercel-builder": "^0.22.1",
     "axios": "^0.25.0",
-    "bootstrap": "^4.6.1",
-    "bootstrap-vue": "^2.21.2",
     "core-js": "^3.19.3",
     "graphql-tag": "^2.12.6",
     "js-cookie": "^3.0.1",
@@ -30,6 +28,8 @@
   },
   "devDependencies": {
     "nuxt": "^2.15.8",
+    "bootstrap": "^4.6.1",
+    "bootstrap-vue": "^2.21.2",
     "eslint-config-prettier": "^8.3.0",
     "prettier": "^2.5.1"
   }
