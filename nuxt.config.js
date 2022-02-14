@@ -54,6 +54,7 @@ export default {
     // https://go.nuxtjs.dev/bootstrap
     'bootstrap-vue/nuxt',
     '@nuxtjs/apollo',
+    '@nuxtjs/proxy',
   ],
   apollo: {
     clientConfigs: {
@@ -63,6 +64,10 @@ export default {
           headers: {
             Authorization: token ? `Bearer ${token}` : '',
           },
+          fetchOptions: {
+            mode: 'cors',
+          },
+          credentials: 'omit',
         },
         watchLoading: '~/plugins/apollo-watch-loading-handler.js',
         errorHandler: '~/plugins/apollo-error-handler.js',
@@ -72,6 +77,7 @@ export default {
   },
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
+  proxy: [process.env.BASE_URL],
   env: {
     BASE_URL: process.env.BASE_URL || 'http://localhost:4000',
     API_KEY: process.env.FINNHUB_API_KEY,
