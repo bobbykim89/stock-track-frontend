@@ -77,6 +77,7 @@ export default {
       },
     }
   },
+  middleware: 'guestOnly',
   methods: {
     async onSubmit() {
       const { username, email, password, password2 } = this.userInfo

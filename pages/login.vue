@@ -49,6 +49,7 @@ export default {
       },
     }
   },
+  middleware: 'guestOnly',
   methods: {
     async onSubmit() {
       const { email, password } = this.userInfo

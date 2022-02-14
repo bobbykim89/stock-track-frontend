@@ -59,12 +59,13 @@ export default {
   apollo: {
     clientConfigs: {
       default: {
-        httpEndpoint: process.env.BASE_URL || 'http://localhost:4000/graphql',
+        httpEndpoint: 'http://localhost:4000/graphql',
         httpLinkOptions: {
           headers: {
             Authorization: token ? `Bearer ${token}` : '',
           },
           mode: 'cors',
+          credentials: 'include',
         },
         watchLoading: '~/plugins/apollo-watch-loading-handler.js',
         errorHandler: '~/plugins/apollo-error-handler.js',
@@ -74,7 +75,6 @@ export default {
   },
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
-  proxy: [process.env.BASE_URL],
   env: {
     BASE_URL: process.env.BASE_URL || 'http://localhost:4000',
     API_KEY: process.env.FINNHUB_API_KEY,
