@@ -1,24 +1,28 @@
 <template>
-  <div class="mb-3 px-2">
-    <b-card
-      :header="favorite.code"
-      :title="favorite.name"
-      bg-variant="dark"
-      text-variant="white"
-      class="h-100 shadow"
-    >
-      <b-card-text v-if="liveInfo.current !== ''">
-        <hr class="border-light" />
-        <p>Current Price: $ {{ liveInfo.current }}</p>
-        <p v-bind:class="[changePositive ? 'text-success' : 'text-danger']">
-          <span class="text-white">Change:</span> {{ liveInfo.change }}
-        </p>
-        <p>Daily High: $ {{ liveInfo.high }}</p>
-        <p>Daily Low: $ {{ liveInfo.low }}</p>
-      </b-card-text>
-      <b-button @click="handleRemove" class="w-100">Remove</b-button>
-    </b-card>
-  </div>
+  <b-card
+    :header="favorite.code"
+    bg-variant="dark"
+    text-variant="white"
+    class="shadow"
+  >
+    <b-card-body v-if="liveInfo.current !== ''" class="p-0 card-text-box">
+      <h4>{{ favorite.name }}</h4>
+      <hr class="border-light" />
+      <p>Current Price: $ {{ liveInfo.current }}</p>
+      <p v-bind:class="[changePositive ? 'text-success' : 'text-danger']">
+        <span class="text-white">Change:</span> {{ liveInfo.change }}
+      </p>
+      <p>Daily High: $ {{ liveInfo.high }}</p>
+      <p>Daily Low: $ {{ liveInfo.low }}</p>
+    </b-card-body>
+    <b-card-footer class="p-0">
+      <div class="row no-gutters">
+        <div class="col-12">
+          <b-button @click="handleRemove" class="w-100">Remove</b-button>
+        </div>
+      </div>
+    </b-card-footer>
+  </b-card>
 </template>
 
 <script>
@@ -40,6 +44,7 @@ export default {
         low: '',
       },
       changePositive: null,
+      interval: null,
     }
   },
   async fetch() {
@@ -67,8 +72,26 @@ export default {
         id: this.favorite.id,
       })
     },
+    async reNew() {
+      await this.$fetch()
+    },
+  },
+  mounted() {
+    this.reNew
+  },
+  created() {
+    this.interval = setInterval(() => {
+      this.reNew()
+    }, 30000)
+  },
+  destroyed() {
+    clearInterval(this.interval)
   },
 }
 </script>
 
-<style></style>
+<style scope>
+.card-text-box {
+  min-height: 160px;
+}
+</style>

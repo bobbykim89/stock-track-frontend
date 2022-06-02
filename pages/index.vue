@@ -1,6 +1,6 @@
 <template>
-  <div class="h-100 mb-5">
-    <div class="bg-dark rounded shadow p-4 px-md-5 my-4 mx-2">
+  <div class="screen-height mb-5">
+    <div class="bg-dark rounded shadow p-4 px-md-5 my-4 mx-3">
       <b-input-group>
         <b-input-group-prepend>
           <b-button @click="clickSearch">
@@ -20,26 +20,31 @@
       </b-input-group>
     </div>
 
-    <div v-if="stockDetail && query !== ''">
-      <b-card-group>
-        <StockCard
+    <div v-if="stockDetail && query !== ''" class="container">
+      <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4">
+        <div
+          class="col mb-3 mb-lg-4"
           v-for="stock in stockDetail"
           :key="stock.symbol"
-          class="col-md-4 col-lg-3"
-          :stockInfo="stock"
-          @clearSearch="clearSearch"
-        />
-      </b-card-group>
+        >
+          <StockCard
+            :stockInfo="stock"
+            @clearSearch="clearSearch"
+            class="h-100"
+          />
+        </div>
+      </div>
     </div>
-    <div v-if="query === ''">
-      <b-card-group>
-        <FavoritesCard
+    <div v-if="query === ''" class="container">
+      <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4">
+        <div
+          class="col mb-3 mb-lg-4"
           v-for="favorite in getPosts"
           :key="favorite.id"
-          :favorite="favorite"
-          class="col-md-4 col-lg-3"
-        />
-      </b-card-group>
+        >
+          <FavoritesCard :favorite="favorite" class="h-100" />
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -82,8 +87,8 @@ export default {
       })
       this.stockDetail = alphaList
     },
-    onPageLoad() {
-      this.$store.dispatch('postStore/getPosts')
+    async onPageLoad() {
+      await this.$store.dispatch('postStore/getPosts')
     },
     clearSearch() {
       this.$nuxt.refresh()
@@ -99,8 +104,14 @@ export default {
       return posts
     },
   },
-  mounted() {
-    this.onPageLoad()
+  async mounted() {
+    await this.onPageLoad()
   },
 }
 </script>
+
+<style>
+.screen-height {
+  min-height: 80vh;
+}
+</style>
