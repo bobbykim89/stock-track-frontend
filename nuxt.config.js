@@ -113,7 +113,62 @@ export default {
         },
       ],
       workbox: {
-        importScripts: ['service-worker.js'],
+        cleanupOutdatedCaches: true,
+        cacheNames: {
+          prefix: 'stock-track',
+          suffix: '',
+          precache: 'precache',
+        },
+        offlineStrategy: 'StaleWhileRevalidate',
+        offlineAssets: ['/favicon.ico', '/pwa-192x19x.png', '/pwa-512x512.png'],
+        runtimeCaching: [
+          {
+            urlPattern: 'https://stock-track-backend.herokuapp.com/.*',
+            handler: 'NetworkFirst',
+            method: 'GET',
+            strategyOptions: {
+              cacheName: 'api-cache',
+            },
+            strategyPlugins: [
+              {
+                use: 'Expiration',
+                config: {
+                  maxEntries: 100,
+                  maxAgeSeconds: 60 * 60 * 24 * 5,
+                },
+              },
+              {
+                use: 'CacheableResponse',
+                config: {
+                  statuses: [0, 200],
+                },
+              },
+            ],
+          },
+          {
+            urlPattern: 'https://finnhub.io/api/v1/.*',
+            handler: 'NetworkFirst',
+            method: 'GET',
+            strategyOptions: {
+              cacheName: 'finnhub-cache',
+            },
+            strategyPlugins: [
+              {
+                use: 'Expiration',
+                config: {
+                  maxEntries: 50,
+                  maxAgeSeconds: 60 * 60 * 24 * 5,
+                },
+              },
+              {
+                use: 'CacheableResponse',
+                config: {
+                  statuses: [0, 200],
+                },
+              },
+            ],
+          },
+        ],
       },
     },
   },
