@@ -47,7 +47,7 @@ export default {
   components: true,
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
-  buildModules: ['@nuxtjs/moment'],
+  buildModules: ['@nuxtjs/moment', '@nuxtjs/pwa'],
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
@@ -78,5 +78,43 @@ export default {
     BASE_URL: process.env.BASE_URL || 'http://localhost:4000',
     API_KEY: process.env.FINNHUB_API_KEY,
     ALPHA_API_KEY: process.env.ALPHAVANTAGE_API_KEY,
+  },
+  pwa: {
+    meta: {
+      charset: 'utf-8',
+      appleStatusBarStyle: 'black',
+      name: 'Stock Track',
+      author: 'Sihun Kim',
+    },
+    manifest: {
+      name: 'Stock Track',
+      short_name: 'Stock Track',
+      description: 'Simple web app for tracking stock info and to do list',
+      start_url: '.',
+      background_color: '#484848',
+      theme_color: '#ffffff',
+      dir: 'ltr',
+      lang: 'en-US',
+      icons: [
+        {
+          src: '/favicon.ico',
+          sizes: '48x48',
+          type: 'image/x-icon',
+        },
+        {
+          src: '/pwa-192x192.png',
+          sizes: '192x192',
+          type: 'image/png',
+        },
+        {
+          src: '/pwa-512x512.png',
+          sizes: '512x512',
+          type: 'image/png',
+        },
+      ],
+      workbox: {
+        importScripts: ['service-worker.js'],
+      },
+    },
   },
 }
